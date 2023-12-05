@@ -1,35 +1,30 @@
-name: Create README for Pull Request
+name: Update Readme
  
 on:
+  workflow_dispatch:
   pull_request:
     types:
       - opened
       - synchronize
+      - reopened
+      - closed
  
 jobs:
-  create-readme:
-    runs-on: self-hosted
+  update-readme:
+    runs-on: ubuntu-latest
  
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
  
-      - name: Set up Git
+      - name: Run update script
         run: |
-          cd ${{ github.workspace }}
-          rm -rf .git  # Remove the existing .git directory if it exists
-          git init  # Initialize a new Git repository
-          git config --global user.email "jagakarthi11@gmail.com"
+           echo "PR Title: ${{ github.event.pull_request.title }}" >> readme.txt
+           DESCRIPTION=$(curl -s -H "Authorization: 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" -H "Accept: application/vnd.github.v3+json" https://api.github.softwareag.com/repos/gopo/demotask/pulls/${{ github.event.number }} | jq -r '.body')
+           echo "PR Description: $DESCRIPTION" >>readme.txt
  
-      - name: Generate README
-        run: |
-          echo "# Pull Request Title: ${{ github.event.pull_request.title }}" > README.md
-          echo -e "\n${{ github.event.pull_request.body }}" >> README.md
- 
-      - name: Display generated README
-        run: cat README.md
- 
-      - name: Commit README
-        run: |
-          git add README.md
-          git commit -m "Create README for pull request"
+           
+      - uses: actions/upload-artifact@v3  
+        with:
+          name: Build    
+          path: readme.txt
