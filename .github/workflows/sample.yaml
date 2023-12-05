@@ -1,7 +1,10 @@
 #Author: jaganathan
 name: simple
 on:
-  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
  
 jobs:
   build:
