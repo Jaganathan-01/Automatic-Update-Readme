@@ -1,6 +1,6 @@
 #Author: jaganathan
-#Description: sample
-name: simple
+
+name: Demo
 on:
   pull_request:
     types:
