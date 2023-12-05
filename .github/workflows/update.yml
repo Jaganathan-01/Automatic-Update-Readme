@@ -31,4 +31,4 @@ jobs:
         git config --global user.name "Jaganathan-01"
         git add title.txt
         git commit -m "Update title.txt"
-        git push
+        git push main
