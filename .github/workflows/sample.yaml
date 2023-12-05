@@ -20,7 +20,6 @@ jobs:
           rm -rf .git  # Remove the existing .git directory if it exists
           git init  # Initialize a new Git repository
           git config --global user.email "jagakarthi11@gmail.com"
-          git config --global user.name "jaganathan-01"
  
       - name: Generate README
         run: |
